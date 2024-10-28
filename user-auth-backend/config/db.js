@@ -3,17 +3,32 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const connectDB = async () => {
+const connectDB1 = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    const conn = await mongoose.createConnection(process.env.MONGO_URI1, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('MongoDB connected');
+    console.log('Main MongoDB connected');
+    return conn;
   } catch (error) {
-    console.error('MongoDB connection failed:', error.message);
+    console.error('Main MongoDB connection failed:', error.message);
     process.exit(1); // Exit process with failure
   }
 };
 
-module.exports = connectDB;
+const connectDB2 = async () => {
+  try {
+    const conn = await mongoose.createConnection(process.env.MONGO_URI2, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Listings MongoDB connected');
+    return conn;
+  } catch (error) {
+    console.error('Listings MongoDB connection failed:', error.message);
+    process.exit(1); // Exit process with failure
+  }
+};
+
+module.exports = { connectDB1, connectDB2 };

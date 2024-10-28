@@ -1,0 +1,31 @@
+/* src/components/PlaceDetail.css */
+
+.place-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  .place-detail img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .place-detail h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+  }
+  
+  .place-detail p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .place-detail a {
+    display: inline-block;
+    margin-top: 1em;
+    color: #007bff;
+  }
+  

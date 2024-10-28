@@ -23,6 +23,9 @@ function Navbar() {
           </li>
           {/* Profile Link */}
           <li>
+            <Link className='text-blue-600' to="/listings">Site Listings</Link>
+          </li>
+          <li>
             <Link to="/profile" className="text-blue-600">Profile</Link>
           </li>
         </ul>
