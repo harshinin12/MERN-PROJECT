@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { loginUser } from '../api';
+
 function LoginModal({ onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
- 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await loginUser({ email, password });
-      alert("Logged in successfully:", response.data);
+      alert("Logged in successfully");
       onClose();
-     
     } catch (error) {
       console.error("Login error:", error.response?.data?.message || error.message);
       alert("Login failed: " + (error.response?.data?.message || error.message));

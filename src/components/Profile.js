@@ -6,14 +6,28 @@ function ProfilePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch user data from localStorage after registration or login
-    const storedUser = JSON.parse(localStorage.getItem("userData"));
-    if (storedUser) {
-      setUser(storedUser);
-    } else {
-      // If no user is logged in, redirect to login page
-      navigate("/login");
-    }
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/auth/userData', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
+        } else {
+          console.error('Failed to fetch user data:', await response.json());
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+        navigate('/login');
+      }
+    };
+
+    fetchUserData();
   }, [navigate]);
 
   if (!user) {
@@ -46,7 +60,7 @@ function ProfilePage() {
       </div>
       <button
         onClick={() => {
-          localStorage.removeItem("userData");
+          localStorage.removeItem("token");
           navigate("/login");
         }}
         className="mt-4 bg-red-500 text-white px-4 py-2 rounded"

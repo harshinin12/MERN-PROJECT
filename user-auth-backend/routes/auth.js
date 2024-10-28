@@ -55,4 +55,26 @@ router.post('/login', async (req, res) => {
   res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
 });
 
+// Fetch User Data Route
+router.get('/userData', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1]; // Get the token from the authorization header
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+    const user = await User.findById(decoded.id).select('-password'); // Find user and exclude password
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user); // Return user data
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
