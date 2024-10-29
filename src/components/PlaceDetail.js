@@ -1,11 +1,12 @@
 // src/components/PlaceDetail.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import './PlaceDetail.css';
 
 function PlaceDetail() {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/auth/listings/${id}`)
@@ -15,6 +16,10 @@ function PlaceDetail() {
   }, [id]);
 
   if (!place) return <div>Loading...</div>;
+
+  const handleBooking = () => {
+    navigate('/booking', { state: { place } });
+  };
 
   return (
     <div className="place-detail">
@@ -31,6 +36,10 @@ function PlaceDetail() {
         ))}
       </ul>
       <p><strong>Details:</strong> {place.details}</p>
+
+      <button className="sumbit-btn" onClick={handleBooking}>Book Now</button>
+      <hr></hr>
+      <Link to="/">Back to List</Link>
     </div>
   );
 }

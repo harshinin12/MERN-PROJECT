@@ -31,7 +31,13 @@ router.post('/register', async (req, res) => {
   });
 
   await newUser.save();
-  res.status(201).json({ message: 'User registered successfully' });
+  res.status(201).json({ message: 'User registered successfully',
+    user: {
+      id: newUser._id,  
+      name: newUser.name,
+      email: newUser.email,
+    }
+   });
 });
 
 // Login Route
@@ -51,7 +57,7 @@ router.post('/login', async (req, res) => {
   }
 
   // Create and return token
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '12h' });
   res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
 });
 

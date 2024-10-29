@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { loginUser } from '../api';
+import { useAuth } from '../context/AuthContext'; // Import your AuthContext
+import { useNavigate } from 'react-router-dom';
 
 function LoginModal({ onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth(); // Get the login function from AuthContext
+  const navigate = useNavigate(); // Use navigate to redirect after login
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser({ email, password });
+      await login({ email, password }); // Call the login function from AuthContext
       alert("Logged in successfully");
-      onClose();
+      onClose(); // Close the modal after successful login
+      navigate('/profile'); // Redirect to the profile page or another page after login
     } catch (error) {
       console.error("Login error:", error.response?.data?.message || error.message);
       alert("Login failed: " + (error.response?.data?.message || error.message));

@@ -5,9 +5,11 @@ dotenv.config();
 
 const connectDB1 = async () => {
   try {
-    const conn = await mongoose.createConnection(process.env.MONGO_URI1, {
+    const conn = await mongoose.createConnection(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // 5 seconds to find server
+      connectTimeoutMS: 10000 // 10 seconds for initial connection
     });
     console.log('Main MongoDB connected');
     return conn;
@@ -22,6 +24,8 @@ const connectDB2 = async () => {
     const conn = await mongoose.createConnection(process.env.MONGO_URI2, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 10000
     });
     console.log('Listings MongoDB connected');
     return conn;
@@ -30,5 +34,6 @@ const connectDB2 = async () => {
     process.exit(1); // Exit process with failure
   }
 };
+
 
 module.exports = { connectDB1, connectDB2 };

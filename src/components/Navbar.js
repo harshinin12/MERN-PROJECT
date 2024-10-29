@@ -10,7 +10,7 @@ function Navbar() {
   return (
     <nav className="bg-white shadow-md py-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-blue-500">Welcome!Find your stay</Link>
+        <Link to="/" className="text-2xl font-bold text-blue-500">Welcome! Find your stay</Link>
         <ul className="flex space-x-6">
         <li>
             <Link to="/" className="text-blue-600">Home</Link> {/* Home Tab */}
